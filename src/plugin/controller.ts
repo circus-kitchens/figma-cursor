@@ -81,6 +81,18 @@ async function getAllNodeDetails(node: SceneNode) {
         }
       }
     }
+    
+    // Get text style name if available
+    if (textNode.textStyleId) {
+      try {
+        const textStyle = await figma.getStyleByIdAsync(textNode.textStyleId as string);
+        if (textStyle) {
+          details.textProperties.textStyleName = textStyle.name;
+        }
+      } catch (error) {
+        console.error('Error fetching text style:', error);
+      }
+    }
   }
 
   // Add color token information for fills and strokes
